@@ -9,8 +9,8 @@
 
 (when window-system (set-exec-path-from-shell-PATH))
 
-(set-face-attribute 'default nil :font "JetBrains Mono NL 15")
-(setq-default cursor-type '(bar . 3))
+(set-face-attribute 'default nil :font "JetBrains Mono NL 16")
+(setq-default cursor-type '(bar . 4))
 
 ;(setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
@@ -21,7 +21,7 @@
 
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
-(scroll-lock-mode 1)
+;;(scroll-lock-mode 1)
 
 (require 'package)
 (add-to-list 'package-archives
@@ -46,7 +46,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
     '(package-selected-packages
-         '(company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode ## lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright)))
+         '(company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode ## lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -129,9 +129,12 @@
 (setq company-minimum-prefix-length 1
     company-idle-delay 0.0)
 
+;; git-gutter
+(use-package git-gutter)
+(global-git-gutter-mode +1)
+
 ;; custom shortcuts
 (global-set-key (kbd "<C-return>") (kbd "C-e C-m"))
 (global-set-key (kbd "C-M-b") 'treemacs)
 (global-set-key (kbd "<f12>") 'lsp-find-definition)
 (global-set-key (kbd "<S-f12>") 'lsp-find-references)
-

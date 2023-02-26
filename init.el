@@ -34,6 +34,8 @@
     '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
 
+(add-to-list 'package-pinned-packages '(telega . "melpa-stable"))
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -46,7 +48,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
     '(package-selected-packages
-         '(company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode ## lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
+         '(telega company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode ## lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -79,6 +81,16 @@
 ;; highlight matching parens
 (show-paren-mode 1)
 
+;; telega
+(use-package telega
+    :ensure t
+    :config
+    (setq telega-use-docker t)
+    (setq telega-enable-storage-optimizer t)
+    (setq telega-chat-input-markups '("markdown2" nil "org"))
+    (add-hook 'telega-load-hook
+	(lambda ()
+	    (define-key global-map (kbd "C-c t") telega-prefix-map))))
 ;; golang
 ;; Company mode
 (setq company-idle-delay 0)

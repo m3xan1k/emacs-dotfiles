@@ -9,12 +9,28 @@
 
 (when window-system (set-exec-path-from-shell-PATH))
 
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+    '(package-selected-packages
+         '(company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
 (set-face-attribute 'default nil :font "JetBrains Mono NL 16")
-(setq-default cursor-type '(bar . 4))
+;;(setq-default cursor-type '(bar . 4))
 
 ;(setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
-(setq lisp-indent-offset 4)
+(setq lisp-indent-offset 2)
 (setq column-number-mode t)
 (global-display-line-numbers-mode)
 (electric-pair-mode t)
@@ -22,6 +38,22 @@
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
 ;;(scroll-lock-mode 1)
+
+(setq inhibit-startup-message t)
+(tool-bar-mode -1)
+
+;; Disable the splash screen (to enable it agin, replace the t with 0)
+(setq inhibit-splash-screen t)
+
+;; Enable transient mark mode
+(transient-mark-mode 1)
+
+;; tab always indent and complete
+(setq tab-always-indent 'complete)
+
+;; highlight matching parens
+(show-paren-mode 1)
+
 
 (require 'package)
 (add-to-list 'package-archives
@@ -38,51 +70,102 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-    '(package-selected-packages
-         '(company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode ## lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-
 (use-package almost-mono-themes
-    :config
-  ;; (load-theme 'almost-mono-black t))
-    ;; (load-theme 'almost-mono-gray t))
-    (load-theme 'almost-mono-cream t))
-  ;;(load-theme 'almost-mono-white t))
+  :ensure t
+  :config
+  (load-theme 'almost-mono-cream t))
 
-;; -*- mode: elisp -*-
+(use-package try
+  :ensure t)
 
-;; Disable the splash screen (to enable it agin, replace the t with 0)
-(setq inhibit-splash-screen t)
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
 
-;; Enable transient mark mode
-(transient-mark-mode 1)
+(use-package tabbar
+  :ensure t
+  :config
+  (tabbar-mode 1))
 
-;; tab always indent and complete
-(setq tab-always-indent 'complete)
+(use-package counsel
+  :ensure t)
 
-;; racket mode
-(setq racket-program "/usr/racket/bin/racket")
+(use-package ivy
+  :ensure t
+  :diminish (ivy-mode)
+  :bind (("C-x b" . ivy-switch-buffer))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-display-style 'fancy))
 
-;; highlight matching parens
-(show-paren-mode 1)
+(use-package swiper
+  :ensure t
+  :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-display-style 'fancy)
+    ;; enable this if you want `swiper' to use it
+    ;; (setq search-default-mode #'char-fold-to-regexp)
+    (global-set-key (kbd "C-s") 'swiper)
+    (global-set-key (kbd "C-r") 'swiper)
+    (global-set-key (kbd "C-c C-r") 'ivy-resume)
+    (global-set-key (kbd "M-x") 'counsel-M-x)
+    (global-set-key (kbd "C-x C-f") 'counsel-find-file)))
 
-;; golang
+(use-package ace-window
+  :ensure t
+  :bind ("M-o" . ace-window))
+
 ;; Company mode
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 1)
+(use-package company
+  :ensure t
+  :config
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 1))
+
+;; LSP mode
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration))
+
+;; Python LSP
+(use-package lsp-pyright
+  :ensure t
+  :defer t
+  :config
+  (setq lsp-pyright-disable-language-service nil
+    lsp-pyright-use-library-code-for-types t
+    lsp-headerline-breadcrumb-mode t
+    lsp-pyright-stub-path (concat (getenv "HOME") "/Documents/projects/python-type-stubs"))
+
+  :hook ((python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred)))))
+
+;; optionally for LSP
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+(use-package lsp-treemacs
+  :commands lsp-treemacs-errors-list)
+
+;; git-gutter
+(use-package git-gutter)
+(global-git-gutter-mode +1)
+
+
+;; VARS
+(setq indo-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+
+;; company-mode
+(setq company-minimum-prefix-length 1
+    company-idle-delay 0.0)
 
 ;; Go - lsp-mode
 ;; Set up before-save hooks to format buffer and add/delete imports.
@@ -96,44 +179,11 @@
 (add-hook 'go-mode-hook #'lsp-deferred)
 (add-hook 'go-mode-hook #'yas-minor-mode)
 
-;; LSP mode
-;; (use-package lsp-mode
-;;   :init
-;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-;;   (setq lsp-keymap-prefix "C-c l")
-;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-;;          (python-mode . lsp)
-;;          ;; if you want which-key integration
-;;          (lsp-mode . lsp-enable-which-key-integration))
-;;   :commands lsp)
+;; racket mode
+(setq racket-program "/usr/racket/bin/racket")
 
-;; Python LSP
-(use-package lsp-pyright
-    :ensure t
-    :defer t
-    :config
-    (setq lsp-pyright-disable-language-service nil
-        lsp-pyright-use-library-code-for-types t
-        lsp-headerline-breadcrumb-mode t
-          lsp-pyright-stub-path (concat (getenv "HOME") "/Documents/projects/python-type-stubs"))
 
-    :hook ((python-mode . (lambda ()
-                             (require 'lsp-pyright)
-                             (lsp-deferred)))))
-
-;; optionally for LSP
-(use-package lsp-ui :commands lsp-ui-mode)
-(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-
-;; company-mode
-(setq company-minimum-prefix-length 1
-    company-idle-delay 0.0)
-
-;; git-gutter
-(use-package git-gutter)
-(global-git-gutter-mode +1)
-
-;; custom shortcuts
+;; GLOBAL CUSTOM SHORTCUTS
 (global-set-key (kbd "<C-return>") (kbd "C-e C-m"))
 (global-set-key (kbd "C-M-b") 'treemacs)
 (global-set-key (kbd "<f12>") 'lsp-find-definition)

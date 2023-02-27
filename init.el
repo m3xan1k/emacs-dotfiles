@@ -25,7 +25,7 @@
  )
 
 
-(set-face-attribute 'default nil :font "JetBrains Mono NL 16")
+(set-face-attribute 'default nil :family "JetBrains Mono NL" :height 170)
 ;;(setq-default cursor-type '(bar . 4))
 
 ;(setq-default tab-width 4)
@@ -53,7 +53,6 @@
 
 ;; highlight matching parens
 (show-paren-mode 1)
-
 
 (require 'package)
 (add-to-list 'package-archives
@@ -125,9 +124,12 @@
   :ensure t
   :config
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 1))
+  (setq company-minimum-prefix-Length 1)
+  :bind (:map company-active-map
+          ("C-n" . company-select-next)
+          ("C-p" . company-select-previous)))
 
-;; LSP mode
+;; Lsp mode
 (use-package lsp-mode
   :ensure t
   :init
@@ -151,24 +153,31 @@
 
 ;; optionally for LSP
 (use-package lsp-ui
+  :ensure t
   :commands lsp-ui-mode)
 (use-package lsp-treemacs
+  :ensure t
   :commands lsp-treemacs-errors-list)
 
 ;; git-gutter
-(use-package git-gutter)
-(global-git-gutter-mode +1)
+(use-package git-gutter
+  :ensure t
+  :config
+  (global-git-gutter-mode +1))
 
 ;; telega
 (use-package telega
-    :ensure t
-    :config
-    (setq telega-use-docker t)
-    (setq telega-enable-storage-optimizer t)
-    (setq telega-chat-input-markups '("markdown2" nil "org"))
-    (add-hook 'telega-load-hook
-	(lambda ()
-	    (define-key global-map (kbd "C-c t") telega-prefix-map))))
+  :ensure t
+  :config
+  (setq telega-use-docker t)
+  (setq telega-enable-storage-optimizer t)
+  (setq telega-chat-input-markups '("markdown2" nil "org"))
+  (add-hook 'telega-load-hook
+    (lambda ()
+      (define-key global-map (kbd "C-c t") telega-prefix-map))))
+
+(use-package treemacs
+  :ensure t)
 
 ;; golang
 ;; Company mode
@@ -205,4 +214,6 @@
 (global-set-key (kbd "C-M-b") 'treemacs)
 (global-set-key (kbd "<f12>") 'lsp-find-definition)
 (global-set-key (kbd "<S-f12>") 'lsp-find-references)
-
+(global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
+(define-key global-map (kbd "C-<tab>") 'other-window)
+(define-key global-map (kbd "C-z") 'nil)

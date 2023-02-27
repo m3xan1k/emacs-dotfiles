@@ -16,7 +16,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
   '(package-selected-packages
-     '(ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
+     '(helm-ag helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,7 +25,7 @@
  )
 
 
-(set-face-attribute 'default nil :family "JetBrains Mono NL" :height 170)
+(set-face-attribute 'default nil :family "JetBrains Mono NL" :height 165)
 ;;(setq-default cursor-type '(bar . 4))
 
 ;(setq-default tab-width 4)
@@ -64,8 +64,6 @@
 (add-to-list 'package-archives
     '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
-
-(add-to-list 'package-pinned-packages '(telega . "melpa-stable"))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -179,10 +177,40 @@
 (use-package treemacs
   :ensure t)
 
-;; golang
-;; Company mode
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 1)
+(use-package projectile
+  :ensure t
+  :pin melpa-stable
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("C-x p" . projectile-command-map)))
+
+(use-package ag
+  :ensure t)
+
+(use-package ripgrep
+  :ensure t)
+
+(use-package fzf
+  :ensure t
+  :config
+  (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
+        fzf/executable "fzf"
+        fzf/git-grep-args "-i --line-number %s"
+        ;; command used for `fzf-grep-*` functions
+        ;; example usage for ripgrep:
+        ;; fzf/grep-command "rg --no-heading -nH"
+        fzf/grep-command "grep -nrH"
+        ;; If nil, the fzf buffer will appear at the top of the window
+        fzf/position-bottom t
+    fzf/window-height 15))
+
+(use-package helm
+  :ensure t)
+
+(use-package helm-ag
+  :ensure t)
+
 
 ;; VARS
 (setq indo-enable-flex-matching t)
@@ -217,3 +245,5 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
 (define-key global-map (kbd "C-<tab>") 'other-window)
 (define-key global-map (kbd "C-z") 'nil)
+(global-set-key (kbd "M-s M-s") 'helm-do-ag-project-root)
+(global-set-key (kbd "M-p") 'fzf-projectile)

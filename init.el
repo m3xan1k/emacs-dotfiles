@@ -16,7 +16,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
   '(package-selected-packages
-     '(helm-ag helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
+     '(beacon helm-ag helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -210,6 +210,14 @@
 
 (use-package helm-ag
   :ensure t)
+
+(use-package beacon
+  :ensure t
+  :init (beacon-mode 1)
+  :config
+  (setq beacon-blink-when-point-moves t)
+  (setq beacon-blink-when-window-changes t)
+  (setq beacon-color "gray"))
 
 
 ;; VARS

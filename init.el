@@ -16,7 +16,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
   '(package-selected-packages
-     '(helm-ag helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
+     '(move-text expand-region helm-ag helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,7 +25,7 @@
  )
 
 
-(set-face-attribute 'default nil :family "JetBrains Mono NL" :height 165)
+(set-face-attribute 'default nil :family "Roboto Mono" :height 165)
 ;;(setq-default cursor-type '(bar . 4))
 
 ;(setq-default tab-width 4)
@@ -53,6 +53,26 @@
 
 ;; highlight matching parens
 (show-paren-mode 1)
+
+;; backup files
+(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups" user-emacs-directory))))
+
+;; autosave files
+(make-directory (expand-file-name "tmp/auto-saves/" user-emacs-directory) t)
+(setq auto-save-list-file-prefix
+  (expand-file-name "tmp/auto-saves/sessions/" user-emacs-directory)
+  auto-save-file-name-transforms
+  `((".*" ,(expand-file-name "tmp/auto-saves" user-emacs-directory) t)))
+
+;; lockfiles
+(setq create-lockfiles nil)
+
+;; misc
+(global-hl-line-mode t)
+
+;; refresh buffer when file changed on disk
+(global-auto-revert-mode t)
+
 
 (require 'package)
 (add-to-list 'package-archives
@@ -205,12 +225,15 @@
         fzf/position-bottom t
     fzf/window-height 15))
 
-(use-package helm
-  :ensure t)
+(use-package expand-region
+  :ensure t
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region))
 
-(use-package helm-ag
-  :ensure t)
-
+(use-package move-text
+  :ensure t
+  :config
+  (move-text-default-bindings))
 
 ;; VARS
 (setq indo-enable-flex-matching t)
@@ -245,5 +268,5 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer-other-window)
 (define-key global-map (kbd "C-<tab>") 'other-window)
 (define-key global-map (kbd "C-z") 'nil)
-(global-set-key (kbd "M-s M-s") 'helm-do-ag-project-root)
+(global-set-key (kbd "M-s M-s") 'counsel-rg)
 (global-set-key (kbd "M-p") 'fzf-projectile)

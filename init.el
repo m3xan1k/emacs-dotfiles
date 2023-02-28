@@ -238,7 +238,10 @@
 (use-package multiple-cursors
   :ensure t
   :config
-  (global-set-key (kbd "C-d") 'mc/mark-next-like-this-word))
+  (global-set-key (kbd "C-d") 'mc/mark-next-like-this-word)
+  (global-unset-key (kbd "M-<down-mouse-1>"))
+  (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
+  (global-set-key (kbd "<M-s-down>") 'mc/edit-beginnings-of-lines))
 
 ;; VARS
 (setq indo-enable-flex-matching t)

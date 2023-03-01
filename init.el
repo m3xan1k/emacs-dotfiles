@@ -55,8 +55,6 @@
 ;; highlight matching parens
 (show-paren-mode 1)
 
-;; hide-show folding
-(hs-minor-mode 1)
 
 ;; backup files
 (setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups" user-emacs-directory))))

@@ -17,19 +17,20 @@
  ;; If there is more than one, they won't work right.
  '(bufler-reverse t)
   '(package-selected-packages
-     '(bufler all-the-icons-dired all-the-icons-ivy all-the-icons diff-hl multiple-cursors move-text expand-region helm-ag helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
+     '(dashboard treemacs-all-the-icons bufler all-the-icons-dired all-the-icons-ivy all-the-icons multiple-cursors move-text expand-region helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter))
+ '(show-trailing-whitespace t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(trailing-whitespace ((t (:background "red1")))))
 
 
 (set-face-attribute 'default nil :family "Roboto Mono" :height 165)
 ;;(setq-default cursor-type '(bar . 4))
 
-;(setq-default tab-width 4)
+;; (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq lisp-indent-offset 2)
 (setq column-number-mode t)
@@ -55,6 +56,8 @@
 ;; highlight matching parens
 (show-paren-mode 1)
 
+;; trailing whitespace visualize
+;;(setq-default show-trailing-whitespace t)
 
 ;; backup files
 (setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups" user-emacs-directory))))
@@ -187,7 +190,7 @@
   ("C-x g p" . git-gutter:previous-hunk)
   ("C-x g =" . git-gutter:popup-hunk))
 
-(global-git-gutter-mode +1)
+(global-git-gutter-mode t)
 
 ;; icons
 (use-package all-the-icons
@@ -223,6 +226,11 @@
 
 (use-package treemacs
   :ensure t)
+
+(use-package treemacs-all-the-icons
+  :ensure t)
+
+(treemacs-load-theme "all-the-icons")
 
 (use-package projectile
   :ensure t
@@ -273,6 +281,16 @@
 (use-package bufler
   :ensure t)
 
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents  . 5)
+                           (bookmarks . 5)
+                           (projects . 5)
+                           (agenda . 5)
+                           (registers . 5))))
+
 ;; VARS
 (setq indo-enable-flex-matching t)
 (setq ido-everywhere t)
@@ -285,7 +303,7 @@
 ;; Go - lsp-mode
 ;; Set up before-save hooks to format buffer and add/delete imports.
 (defun lsp-go-install-save-hooks ()
-    
+
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
@@ -308,5 +326,7 @@
 (define-key global-map (kbd "C-z") 'nil)
 (global-set-key (kbd "M-s M-s") 'counsel-rg)
 (global-set-key (kbd "M-p") 'fzf-projectile)
+(global-set-key (kbd "C->") 'indent-rigidly-right-to-tab-stop)
+(global-set-key (kbd "C-<") 'indent-rigidly-left-to-tab-stop)
 
 (put 'narrow-to-region 'disabled nil)

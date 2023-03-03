@@ -17,12 +17,8 @@
  ;; If there is more than one, they won't work right.
  '(bufler-reverse t)
   '(package-selected-packages
-<<<<<<< HEAD
-     '(beacon helm-ag helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter multiple-cursors move-text expand-region helm-ag helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter)))
-=======
-     '(dashboard treemacs-all-the-icons bufler all-the-icons-dired all-the-icons-ivy all-the-icons multiple-cursors move-text expand-region helm fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode yasnippet company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter))
+     '(beacon multiple-cursors move-text expand-region dashboard treemacs-all-the-icons bufler all-the-icons-dired all-the-icons-ivy all-the-icons multiple-cursors move-text expand-region fzf ripgrep ag projectile telega ace-window counsel tabbar which-key try company-jedi restclient-jq restclient lsp-treemacs cider clojure-mode company lsp-ui go-mode lsp-mode racket-mode true use-package almost-mono-themes lsp-pyright treemacs git-gutter))
  '(show-trailing-whitespace t))
->>>>>>> 483ab5d737215fdd7db3d265acdd97e26576a0ae
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -116,6 +112,9 @@
   (tabbar-mode 1))
 
 (use-package counsel
+  :ensure t)
+
+(use-package racket-mode
   :ensure t)
 
 (use-package ivy
@@ -302,6 +301,12 @@
                            (projects . 5)
                            (agenda . 5)
                            (registers . 5))))
+
+(use-package restclient
+  :ensure t)
+
+(use-package restclient-jq
+  :ensure t)
 
 ;; VARS
 (setq indo-enable-flex-matching t)

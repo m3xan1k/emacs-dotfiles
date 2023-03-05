@@ -59,4 +59,9 @@
 (setq centaur-tabs-set-modified-marker t)
 (setq centaur-tabs-modified-marker "*")
 
+;; modeline
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
 (provide 'my-ui)

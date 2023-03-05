@@ -112,7 +112,7 @@
   ("C-x g p" . git-gutter:previous-hunk)
   ("C-x g =" . git-gutter:popup-hunk))
 
-(global-git-gutter-mode t)
+(global-git-gutter-mode +1)
 
 ;; telega
 (use-package telega

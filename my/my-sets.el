@@ -33,9 +33,21 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
+;; enable narrow for region
 (put 'narrow-to-region 'disabled nil)
 
+;; fix scroll
 (setq scroll-step 1)
 (setq scroll-preserve-screen-position 'always)
+
+;; remember cursor position when open file again
+(save-place-mode 1)
+
+;; recent files history
+(recentf-mode 1)
+
+;; change buffer when file changes on disk
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
 
 (provide 'my-sets)

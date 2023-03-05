@@ -8,4 +8,21 @@
 (global-set-key (kbd "M-s M-s") 'counsel-rg)
 (global-set-key (kbd "M-p") 'fzf-projectile)
 
+;; forward-word
+(defun my-forward-word ()
+  (interactive)
+  (if (looking-at "\\W+\n")
+    (forward-sexp)
+    (forward-word)))
+
+;; backward-word
+(defun my-backward-word ()
+  (interactive)
+  (if (looking-back "\n\\W+")
+    (backward-sexp)
+    (backward-word)))
+
+(global-set-key (kbd "M-f") 'my-forward-word)
+(global-set-key (kbd "M-b") 'my-backward-word)
+
 (provide 'my-keys)

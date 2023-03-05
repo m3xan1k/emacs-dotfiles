@@ -50,4 +50,10 @@
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
 
+;; Kill \n also if killing from the begining of line
+(setq kill-whole-line t)
+
+;; word-forward without delimiters
+(global-superword-mode t)
+
 (provide 'my-sets)

@@ -35,4 +35,7 @@
 
 (put 'narrow-to-region 'disabled nil)
 
+(setq scroll-step 1)
+(setq scroll-preserve-screen-position 'always)
+
 (provide 'my-sets)

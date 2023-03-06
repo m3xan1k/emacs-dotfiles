@@ -25,4 +25,7 @@
 (global-set-key (kbd "M-f") 'my-forward-word)
 (global-set-key (kbd "M-b") 'my-backward-word)
 
+;; LSP
+(global-unset-key (kbd "M-l"))
+
 (provide 'my-keys)

@@ -125,4 +125,10 @@
     (lambda ()
       (define-key global-map (kbd "C-c t") telega-prefix-map))))
 
+;; aggressive-indent
+(use-package aggressive-indent
+  :ensure t)
+
+(global-aggressive-indent-mode 1)
+
 (provide 'my-tools)

@@ -56,6 +56,11 @@
 ;; word-forward without delimiters
 (global-superword-mode t)
 
+(add-hook 'emacs-lisp-mode-hook
+  (lambda ()
+    (superword-mode nil)
+    (subword-mode t)))
+
 ;; hide toolbar
 (tool-bar-mode -1)
 

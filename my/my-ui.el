@@ -26,6 +26,7 @@
   :ensure t)
 
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(setq all-the-icons-scale-factor 1.1)
 
 (use-package treemacs-all-the-icons
   :ensure t)

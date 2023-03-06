@@ -56,4 +56,7 @@
 ;; word-forward without delimiters
 (global-superword-mode t)
 
+;; hide toolbar
+(tool-bar-mode -1)
+
 (provide 'my-sets)

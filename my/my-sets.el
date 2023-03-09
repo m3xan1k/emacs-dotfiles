@@ -38,7 +38,10 @@
 
 ;; fix scroll
 (setq scroll-step 1)
+(setq scroll-margin 1)
+(setq scroll-conservatively 10000)
 (setq scroll-preserve-screen-position 'always)
+(setq redisplay-dont-pause t)
 
 ;; remember cursor position when open file again
 (save-place-mode 1)

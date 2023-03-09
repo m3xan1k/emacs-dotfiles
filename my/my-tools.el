@@ -108,9 +108,9 @@
 (use-package git-gutter
   :ensure t
   :bind
-  ("C-x g n" . git-gutter:next-hunk)
-  ("C-x g p" . git-gutter:previous-hunk)
-  ("C-x g =" . git-gutter:popup-hunk))
+  ("C-c g n" . git-gutter:next-hunk)
+  ("C-c g p" . git-gutter:previous-hunk)
+  ("C-c g =" . git-gutter:popup-hunk))
 
 (global-git-gutter-mode +1)
 
@@ -130,5 +130,10 @@
   :ensure t)
 
 (global-aggressive-indent-mode 1)
+
+(use-package magit
+  :ensure t
+  :bind
+  (("C-x g" . 'magit-status)))
 
 (provide 'my-tools)

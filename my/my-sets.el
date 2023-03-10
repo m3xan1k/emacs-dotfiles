@@ -37,11 +37,8 @@
 (put 'narrow-to-region 'disabled nil)
 
 ;; fix scroll
-(setq scroll-step 1)
-(setq scroll-margin 1)
-(setq scroll-conservatively 10000)
-(setq scroll-preserve-screen-position 'always)
-(setq redisplay-dont-pause t)
+(pixel-scroll-precision-mode 1)
+
 
 ;; remember cursor position when open file again
 (save-place-mode 1)
@@ -67,4 +64,5 @@
 ;; hide toolbar
 (tool-bar-mode -1)
 
+(setq native-comp-async-report-warnings-errors 'silent)
 (provide 'my-sets)
